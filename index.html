@@ -55,10 +55,17 @@
                 // Русская версия для десктопа
                 window.location.href = "https://www.figma.com/proto/YHYtuv2wKDxlAL1T7UHO6Z/Egor-Borodin-Portfolio?page-id=20%3A22&node-id=52-521&viewport=-7108%2C-1706%2C0.71&t=pRvrUTkZ1eIqhfBs-1&scaling=min-zoom&content-scaling=fixed";
             }
+        setTimeout(() => {
+        window.location.href = figmaLink;
+        }, 3000); // Увеличено до 3 секунд
         }
+        window.onload = redirectToFigma;
     </script>
 </head>
 <body>
-    <div class="centered-text">Teleporting<br>to Figma...</div>
+    <div>
+        <div class="centered-text">Teleporting<br>to Figma...</div>
+        <div class="loader"></div> <!-- Анимация загрузки -->
+    </div>
 </body>
 </html>
