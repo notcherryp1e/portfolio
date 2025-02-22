@@ -6,79 +6,98 @@
     <meta property="og:title" content="Egor Borodin" />
     <meta property="og:description" content="Portfolio" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://i.imgur.com/AnC7ABT.png">
     <title>Teleporting to Figma...</title>
     <style>
-        body, html {
+        /* Центрируем текст и прогресс-бар */
+        body {
             margin: 0;
-            padding: 0;
-            height: 100%;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #1E1E1E; /* Темно-серый фон */
-            font-family: Arial, sans-serif; /* Шрифт Arial */
+            background-color: #1E1E1E; /* Цвет фона */
+            color: #C21E65; /* Цвет текста */
+            font-family: Arial, sans-serif;
+            flex-direction: column;
+            text-align: center;
         }
-        .centered-text {
-            font-weight: bold; /* Жирное начертание */
-            font-size: 2rem; /* Размер шрифта */
-            color: #FF8DBC; /* Цвет текста */
-            text-align: center; /* Выравнивание по центру */
-            line-height: 1.5; /* Межстрочный интервал */
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5rem;
         }
-        .loader {
+
+        /* Стиль прогресс-бара */
+        #progress-bar-container {
+            width: 80%;
+            background-color: #333;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
             margin-top: 20px;
-            border: 4px solid #FF8DBC; /* Цвет рамки */
-            border-top: 4px solid transparent; /* Прозрачная верхняя рамка */
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite; /* Анимация вращения */
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: #C21E65;
+            border-radius: 5px;
+            transition: width 2s; /* Прогресс с плавной анимацией */
         }
     </style>
-    <script>
-        function redirectToFigma() {
-            const userAgent = navigator.userAgent.toLowerCase();
-            const language = navigator.language || navigator.userLanguage;
-
-            let figmaLink = 'https://figma.com/default'; // Ссылка по умолчанию
-
-            if (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent)) {
-                // Мобильное устройство
-                figmaLink = 'https://figma.com/mobile';
-            } else {
-                // Десктоп
-                figmaLink = 'https://figma.com/desktop';
-            }
-
-            // Пример редиректа в зависимости от языка
-            if (language.startsWith('ru')) {
-                figmaLink += '-ru'; // Русская версия
-            } else if (language.startsWith('es')) {
-                figmaLink += '-es'; // Испанская версия
-            }
-
-            // Редирект через 3 секунды
-            setTimeout(() => {
-                window.location.href = figmaLink;
-            }, 3000); // Увеличено до 3 секунд
-        }
-
-        // Запуск редиректа при загрузке страницы
-        window.onload = redirectToFigma;
-    </script>
 </head>
 <body>
-    <div>
-        <div class="centered-text">Teleporting<br>to Figma...</div>
-        <div class="loader"></div> <!-- Анимация загрузки -->
+    <h1>Teleporting<br>to Figma...</h1>
+    <!-- Прогресс-бар -->
+    <div id="progress-bar-container">
+        <div id="progress-bar"></div>
     </div>
+
+    <script>
+        // Функция для увеличения прогресс-бара
+        function startProgressBar() {
+            let progressBar = document.getElementById('progress-bar');
+            let width = 0;
+            let interval = setInterval(function() {
+                if (width >= 100) {
+                    clearInterval(interval);
+                } else {
+                    width++;
+                    progressBar.style.width = width + '%';
+                }
+            }, 20); // Увеличение прогресса
+        }
+
+        // Задержка перед редиректом
+        setTimeout(function() {
+            // Получаем информацию о языке пользователя
+            const userLang = navigator.language || navigator.userLanguage;
+
+            // Получаем информацию о размере экрана (мобильное устройство или десктоп)
+            const isMobile = window.innerWidth <= 768;
+
+            // Логика перенаправления в зависимости от устройства и языка
+            if (isMobile) {
+                if (userLang.startsWith('en')) {
+                    // Английская версия для мобильных
+                    window.location.href = "https://www.figma.com/proto/YHYtuv2wKDxlAL1T7UHO6Z/Egor-Borodin-Portfolio?page-id=202%3A4567&node-id=202-4568&p=f&viewport=-2466%2C-2193%2C0.76&t=ykw12SkX5SYP1mQ3-1&scaling=min-zoom&content-scaling=fixed";
+                } else {
+                    // Русская версия для мобильных
+                    window.location.href = "https://www.figma.com/proto/YHYtuv2wKDxlAL1T7UHO6Z/Egor-Borodin-Portfolio?page-id=2%3A53&node-id=202-4256&p=f&viewport=-4143%2C-3302%2C1.15&t=fuNNUG3CmHx5kKjw-1&scaling=min-zoom&content-scaling=fixed";
+                }
+            } else {
+                if (userLang.startsWith('en')) {
+                    // Английская версия для десктопа
+                    window.location.href = "https://www.figma.com/proto/YHYtuv2wKDxlAL1T7UHO6Z/Egor-Borodin-Portfolio?page-id=164%3A170&node-id=164-171&viewport=-1054%2C-174%2C0.29&t=KPy6ZQFCrgjEOX75-1&scaling=min-zoom&content-scaling=fixed";
+                } else {
+                    // Русская версия для десктопа
+                    window.location.href = "https://www.figma.com/proto/YHYtuv2wKDxlAL1T7UHO6Z/Egor-Borodin-Portfolio?page-id=20%3A22&node-id=52-521&viewport=-7108%2C-1706%2C0.71&t=pRvrUTkZ1eIqhfBs-1&scaling=min-zoom&content-scaling=fixed";
+                }
+            }
+        }, 2000); // Задержка в 2 секунды перед редиректом
+
+        // Запускаем прогресс-бар
+        startProgressBar();
+    </script>
 </body>
 </html>
