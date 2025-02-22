@@ -21,7 +21,7 @@
             font-weight: bold; /* Начертание Bold */
             flex-direction: column;
             text-align: center;
-            text-transform: uppercase; /* Делаем текст заглавными буквами */
+            text-transform: lowercase; /* Делаем текст заглавными буквами */
         }
 
         h1 {
@@ -52,11 +52,30 @@
     </style>
 </head>
 <body>
-    <h1>Teleporting<br>to Figma...</h1>
+    <h1 id="randomPhrase">Loading...</h1>
     <!-- Круглый лоадер -->
     <div class="loader"></div>
 
     <script>
+        // Массив фраз с тегами <br> для переноса строк
+        const phrases = [
+            "Let the<br>creativity flow",
+            "Sit back,<br>enjoy the ride",
+            "One moment,<br>magic is loading",
+            "Design Adventure<br>Starts Now",
+            "Something awesome<br>is loading",
+            "Patience,<br>it’s worth the wait"
+        ];
+
+        // Функция для случайного выбора фразы
+        function getRandomPhrase() {
+            const randomIndex = Math.floor(Math.random() * phrases.length);
+            return phrases[randomIndex];
+        }
+
+        // Присваиваем случайную фразу с <br> для переноса строк
+        document.getElementById("randomPhrase").innerHTML = getRandomPhrase();
+
         // Задержка перед редиректом
         setTimeout(function() {
             // Получаем информацию о языке пользователя
