@@ -2,7 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta property="og:image" content="https://i.imgur.com/AnC7ABT.png" />
+    <meta property="og:image" content="https://i.imgur.com/AnC7ABT.png?v=2">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://i.imgur.com/AnC7ABT.png">
     <meta property="og:title" content="Egor Borodin" />
     <meta property="og:description" content="Portfolio" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,9 +22,11 @@
             align-items: center;
             background-color: #1E1E1E; /* Цвет фона */
             color: #C21E65; /* Цвет текста */
-            font-family: Arial, sans-serif;
+            font-family: "Helvetica", sans-serif; /* Используем Helvetica */
+            font-weight: bold; /* Начертание Bold */
             flex-direction: column;
             text-align: center;
+            text-transform: uppercase; /* Делаем текст заглавными буквами */
         }
 
         h1 {
@@ -31,7 +38,7 @@
         #progress-bar-container {
             width: 80%;
             background-color: #333;
-            height: 10px;
+            height: 25px;
             border-radius: 5px;
             overflow: hidden;
             margin-top: 20px;
@@ -94,7 +101,7 @@
                     window.location.href = "https://www.figma.com/proto/YHYtuv2wKDxlAL1T7UHO6Z/Egor-Borodin-Portfolio?page-id=20%3A22&node-id=52-521&viewport=-7108%2C-1706%2C0.71&t=pRvrUTkZ1eIqhfBs-1&scaling=min-zoom&content-scaling=fixed";
                 }
             }
-        }, 2000); // Задержка в 2 секунды перед редиректом
+        }, 1000); // Задержка в 1 секунду перед редиректом
 
         // Запускаем прогресс-бар
         startProgressBar();
