@@ -20,56 +20,40 @@
             flex-direction: column;
             text-align: center;
             text-transform: lowercase;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .text-container {
-            position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 10px; /* Уменьшил расстояние до лоадера */
             line-height: 1.2;
-        }
-
-        .base-text {
-            color: #4E1E33;
-            font-size: 2.5rem;
-            opacity: 0.35;
-            visibility: hidden;
+            max-width: 90%;
         }
 
         .animated-text {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
             color: #C21E65;
             font-size: 2.5rem;
-            white-space: normal;
         }
 
         .word {
             opacity: 0;
             animation: wordAppear 0.5s ease-out forwards;
             display: inline-block;
-            white-space: pre;
+            white-space: pre-wrap;
         }
 
         .line {
             display: block;
-            margin-bottom: 0em;
+            margin-bottom: 0em; /* Уменьшил межстрочный интервал */
         }
 
         @keyframes wordAppear {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .loader {
-            margin-top: 20px;
+            margin-top: 15px; /* Уменьшил расстояние от текста */
             border: 6px solid #C21E65;
             border-top: 6px solid transparent;
             border-radius: 50%;
@@ -82,11 +66,25 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        @media (max-width: 768px) {
+            .animated-text {
+                font-size: 2rem;
+                line-height: 1.2; /* Уменьшил межстрочный интервал */
+            }
+            
+            .line {
+                margin-bottom: 0em; /* Уменьшил для мобилок */
+            }
+            
+            .loader {
+                margin-top: 10px; /* Меньше отступ на мобильных */
+            }
+        }
     </style>
 </head>
 <body>
     <div class="text-container">
-        <h1 class="base-text" id="basePhrase"></h1>
         <div class="animated-text" id="animatedPhrase"></div>
     </div>
     <div class="loader"></div>
@@ -112,12 +110,11 @@
             const lines = phrase.split('<br>');
             let globalDelay = 0;
 
-            lines.forEach((line, lineIndex) => {
+            lines.forEach((line) => {
                 const lineDiv = document.createElement('div');
                 lineDiv.className = 'line';
                 
-                const words = line.split(' ');
-                words.forEach((word, wordIndex) => {
+                line.split(' ').forEach((word) => {
                     const wordSpan = document.createElement('span');
                     wordSpan.className = 'word';
                     wordSpan.textContent = word + ' ';
@@ -130,26 +127,28 @@
             });
         }
 
-        // Инициализация
+        // Инициализация анимации
         const selectedPhrase = getRandomPhrase();
-        document.getElementById('basePhrase').textContent = selectedPhrase;
         createAnimatedText(selectedPhrase);
 
-        // Редирект
+        // Логика редиректа
         setTimeout(() => {
             const userLang = navigator.language || navigator.userLanguage;
             const isMobile = window.innerWidth <= 768;
 
-            if(isMobile) {
-                window.location.href = userLang.startsWith('en') 
-                    ? "https://www.figma.com/proto/YHYtuv2wKDxlAL1T7UHO6Z/Egor-Borodin-Portfolio?page-id=202%3A4567&node-id=202-4568&p=f&viewport=-2466%2C-2193%2C0.76&t=ykw12SkX5SYP1mQ3-1&scaling=min-zoom&content-scaling=fixed"
-                    : "https://www.figma.com/proto/YHYtuv2wKDxlAL1T7UHO6Z/Egor-Borodin-Portfolio?page-id=2%3A53&node-id=202-4256&p=f&viewport=-4143%2C-3302%2C1.15&t=fuNNUG3CmHx5kKjw-1&scaling=min-zoom&content-scaling=fixed";
-            } else {
-                window.location.href = userLang.startsWith('en')
-                    ? "https://www.figma.com/proto/YHYtuv2wKDxlAL1T7UHO6Z/Egor-Borodin-Portfolio?page-id=164%3A170&node-id=164-171&viewport=-1054%2C-174%2C0.29&t=KPy6ZQFCrgjEOX75-1&scaling=min-zoom&content-scaling=fixed"
-                    : "https://www.figma.com/proto/YHYtuv2wKDxlAL1T7UHO6Z/Egor-Borodin-Portfolio?page-id=20%3A22&node-id=52-521&viewport=-7108%2C-1706%2C0.71&t=pRvrUTkZ1eIqhfBs-1&scaling=min-zoom&content-scaling=fixed";
-            }
-        }, 2000);
+            const mobileUrls = {
+                en: "https://www.figma.com/proto/YHYtuv2wKDxlAL1T7UHO6Z/Egor-Borodin-Portfolio?page-id=202%3A4567&node-id=202-4568&p=f&viewport=-2466%2C-2193%2C0.76&t=ykw12SkX5SYP1mQ3-1&scaling=min-zoom&content-scaling=fixed",
+                ru: "https://www.figma.com/proto/YHYtuv2wKDxlAL1T7UHO6Z/Egor-Borodin-Portfolio?page-id=2%3A53&node-id=202-4256&p=f&viewport=-4143%2C-3302%2C1.15&t=fuNNUG3CmHx5kKjw-1&scaling=min-zoom&content-scaling=fixed"
+            };
+
+            const desktopUrls = {
+                en: "https://www.figma.com/proto/YHYtuv2wKDxlAL1T7UHO6Z/Egor-Borodin-Portfolio?page-id=164%3A170&node-id=164-171&viewport=-1054%2C-174%2C0.29&t=KPy6ZQFCrgjEOX75-1&scaling=min-zoom&content-scaling=fixed",
+                ru: "https://www.figma.com/proto/YHYtuv2wKDxlAL1T7UHO6Z/Egor-Borodin-Portfolio?page-id=20%3A22&node-id=52-521&viewport=-7108%2C-1706%2C0.71&t=pRvrUTkZ1eIqhfBs-1&scaling=min-zoom&content-scaling=fixed"
+            };
+
+            const lang = userLang.startsWith('ru') ? 'ru' : 'en';
+            window.location.href = isMobile ? mobileUrls[lang] : desktopUrls[lang];
+        }, 1500);
     </script>
 </body>
 </html>
